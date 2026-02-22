@@ -1,0 +1,27 @@
+﻿src/components/Blockchain/WalletConnect.tsx(9,13): error TS2339: Property 'walletAddress' does not exist on type 'AuthState'.
+src/components/Blockchain/WalletConnect.tsx(9,28): error TS2339: Property 'isConnected' does not exist on type 'AuthState'.
+src/components/Chatbot/ChatWindow.tsx(4,40): error TS2307: Cannot find module '../store' or its corresponding type declarations.
+src/components/Chatbot/ChatWindow.tsx(5,64): error TS2307: Cannot find module '../store/chatbotSlice' or its corresponding type declarations.
+src/components/Chatbot/ChatWindow.tsx(6,26): error TS2307: Cannot find module '../hooks/useVoice' or its corresponding type declarations.
+src/components/Chatbot/ChatWindow.tsx(86,44): error TS7006: Parameter 'm' implicitly has an 'any' type.
+src/components/ProductCards/ProductComparison.tsx(4,29): error TS2614: Module '"../../store/productSlice"' has no exported member 'clearCompare'. Did you mean to use 'import clearCompare from "../../store/productSlice"' instead?
+src/components/VRStore/StoreEnvironment.tsx(13,18): error TS2741: Property 'mirror' is missing in type '{ blur: [number, number]; resolution: number; mixBlur: number; mixStrength: number; roughness: number; depthScale: number; minDepthThreshold: number; maxDepthThreshold: number; color: string; metalness: number; }' but required in type 'Omit<Props, "ref">'.
+src/components/VRStore/StoreEnvironment.tsx(28,85): error TS2322: Type '{ args: [number, number, string, string]; position: [number, number, number]; opacity: number; transparent: true; }' is not assignable to type 'GridHelperProps'.
+  Property 'opacity' does not exist on type 'GridHelperProps'.
+src/hooks/useBlockchain.ts(57,49): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/hooks/useSocket.ts(21,39): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/hooks/useVoice.ts(13,35): error TS2304: Cannot find name 'SpeechRecognition'.
+src/hooks/useVoice.ts(34,40): error TS2552: Cannot find name 'SpeechRecognitionEvent'. Did you mean 'SpeechRecognitionResult'?
+src/hooks/useVoice.ts(39,22): error TS2345: Argument of type 'AsyncThunkAction<any, { message: string; sessionId: string | null; history: ChatMessage[]; }, AsyncThunkConfig>' is not assignable to parameter of type 'UnknownAction'.
+src/pages/Onboarding.tsx(116,76): error TS2345: Argument of type '(f: { categories: string[]; theme: "futuristic" | "cozy" | "minimalist"; avatar: { skinTone: string; hairColor: string; outfit: string; }; }) => { theme: string; categories: string[]; avatar: { skinTone: string; hairColor: string; outfit: string; }; }' is not assignable to parameter of type 'SetStateAction<{ categories: string[]; theme: "futuristic" | "cozy" | "minimalist"; avatar: { skinTone: string; hairColor: string; outfit: string; }; }>'.
+  Type '(f: { categories: string[]; theme: "futuristic" | "cozy" | "minimalist"; avatar: { skinTone: string; hairColor: string; outfit: string; }; }) => { theme: string; categories: string[]; avatar: { skinTone: string; hairColor: string; outfit: string; }; }' is not assignable to type '(prevState: { categories: string[]; theme: "futuristic" | "cozy" | "minimalist"; avatar: { skinTone: string; hairColor: string; outfit: string; }; }) => { categories: string[]; theme: "futuristic" | "cozy" | "minimalist"; avatar: { ...; }; }'.
+    Call signature return types '{ theme: string; categories: string[]; avatar: { skinTone: string; hairColor: string; outfit: string; }; }' and '{ categories: string[]; theme: "futuristic" | "cozy" | "minimalist"; avatar: { skinTone: string; hairColor: string; outfit: string; }; }' are incompatible.
+      The types of 'theme' are incompatible between these types.
+        Type 'string' is not assignable to type '"futuristic" | "cozy" | "minimalist"'.
+src/pages/Profile.tsx(90,72): error TS2345: Argument of type '(f: { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }) => { theme: string; name: string; musicEnabled: boolean; }' is not assignable to parameter of type 'SetStateAction<{ name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }>'.
+  Type '(f: { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }) => { theme: string; name: string; musicEnabled: boolean; }' is not assignable to type '(prevState: { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }) => { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }'.
+    Call signature return types '{ theme: string; name: string; musicEnabled: boolean; }' and '{ name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }' are incompatible.
+      The types of 'theme' are incompatible between these types.
+        Type 'string' is not assignable to type '"futuristic" | "cozy" | "minimalist"'.
+src/services/api.ts(10,27): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/api.ts(57,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.

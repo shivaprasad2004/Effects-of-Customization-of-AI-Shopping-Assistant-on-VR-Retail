@@ -1,0 +1,45 @@
+2026-02-20 16:31:58 [INFO] ✅ MongoDB connected
+2026-02-20 16:31:58 [ERROR] PostgreSQL connection error:
+2026-02-20 16:32:53 [INFO] ✅ MongoDB connected
+2026-02-20 16:32:53 [ERROR] PostgreSQL connection error:
+2026-02-20 16:44:26 [INFO] ✅ MongoDB connected
+2026-02-20 16:44:26 [ERROR] PostgreSQL connection error:
+2026-02-20 16:44:53 [INFO] ✅ MongoDB connected
+2026-02-20 16:44:53 [INFO] ✅ Socket.io handlers registered
+2026-02-20 16:44:53 [INFO] 🚀 VR Retail Backend running on port 5000
+2026-02-20 16:44:53 [INFO] 🌐 Client URL: undefined
+2026-02-20 16:44:53 [INFO] 🔌 Socket.io ready
+2026-02-20 16:45:15 [INFO] ::1 - - [20/Feb/2026:11:15:15 +0000] "GET /api/health HTTP/1.1" 200 84 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.7705"
+2026-02-20 16:48:04 [ERROR] POST /api/auth/register → secretOrPrivateKey must have a value
+Error: secretOrPrivateKey must have a value
+    at module.exports [as sign] (C:\ShivaMajorProject\backend\node_modules\jsonwebtoken\sign.js:111:20)
+    at generateAccessToken (C:\ShivaMajorProject\backend\middleware\authMiddleware.js:10:16)
+    at register (C:\ShivaMajorProject\backend\controllers\authController.js:38:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-02-20 16:48:04 [INFO] ::1 - - [20/Feb/2026:11:18:04 +0000] "POST /api/auth/register HTTP/1.1" 500 66 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-20 16:50:14 [INFO] ::1 - - [20/Feb/2026:11:20:14 +0000] "POST /api/auth/login HTTP/1.1" 401 49 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-20 16:50:21 [INFO] ::1 - - [20/Feb/2026:11:20:21 +0000] "POST /api/auth/login HTTP/1.1" 401 49 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-20 16:50:34 [INFO] ::1 - - [20/Feb/2026:11:20:34 +0000] "POST /api/auth/login HTTP/1.1" 401 49 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-22 22:00:25 [INFO] ✅ MongoDB connected
+2026-02-22 22:00:25 [INFO] ✅ Socket.io handlers registered
+2026-02-22 22:00:25 [INFO] 🚀 VR Retail Backend running on port 5000
+2026-02-22 22:00:25 [INFO] 🌐 Client URL: undefined
+2026-02-22 22:00:25 [INFO] 🔌 Socket.io ready
+2026-02-22 22:04:42 [INFO] ::1 - - [22/Feb/2026:16:34:42 +0000] "GET /api/health HTTP/1.1" 200 84 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.7705"
+2026-02-22 22:09:42 [INFO] ::1 - - [22/Feb/2026:16:39:42 +0000] "POST /api/auth/login HTTP/1.1" 401 49 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-22 22:10:15 [INFO] ::1 - - [22/Feb/2026:16:40:15 +0000] "POST /api/auth/login HTTP/1.1" 401 49 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-22 22:10:52 [INFO] ::1 - - [22/Feb/2026:16:40:52 +0000] "GET /api/auth/login HTTP/1.1" 404 45 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-22 22:10:52 [INFO] ::1 - - [22/Feb/2026:16:40:52 +0000] "GET /favicon.ico HTTP/1.1" 404 45 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+2026-02-22 22:11:49 [INFO] ::1 - - [22/Feb/2026:16:41:49 +0000] "POST /api/auth/login HTTP/1.1" 401 49 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.107.1 Chrome/142.0.7444.235 Electron/39.2.7 Safari/537.36"
+2026-02-22 22:14:36 [ERROR] POST /api/auth/login → secretOrPrivateKey must have a value
+Error: secretOrPrivateKey must have a value
+    at module.exports [as sign] (C:\ShivaMajorProject\backend\node_modules\jsonwebtoken\sign.js:111:20)
+    at generateAccessToken (C:\ShivaMajorProject\backend\middleware\authMiddleware.js:10:16)
+    at login (C:\ShivaMajorProject\backend\controllers\authController.js:78:29)
+2026-02-22 22:14:36 [INFO] ::1 - - [22/Feb/2026:16:44:36 +0000] "POST /api/auth/login HTTP/1.1" 500 66 "-" "axios/1.13.5"
+2026-02-22 22:15:03 [ERROR] POST /api/auth/login → secretOrPrivateKey must have a value
+Error: secretOrPrivateKey must have a value
+    at module.exports [as sign] (C:\ShivaMajorProject\backend\node_modules\jsonwebtoken\sign.js:111:20)
+    at generateAccessToken (C:\ShivaMajorProject\backend\middleware\authMiddleware.js:10:16)
+    at login (C:\ShivaMajorProject\backend\controllers\authController.js:78:29)
+2026-02-22 22:15:03 [INFO] ::1 - - [22/Feb/2026:16:45:03 +0000] "POST /api/auth/login HTTP/1.1" 500 66 "-" "axios/1.13.5"

@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ───────────────────────────────── */
+:root {
+  --color-primary:   #1A1A2E;
+  --color-secondary: #16213E;
+  --color-accent:    #0F3460;
+  --color-highlight: #E94560;
+  --font-heading:    'Orbitron', sans-serif;
+  --font-body:       'Inter', sans-serif;
+  --glass-bg:        rgba(255, 255, 255, 0.05);
+  --glass-border:    rgba(255, 255, 255, 0.1);
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Base Styles ─────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-primary);
+  color: #f0f0f0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Custom Scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-primary); }
+::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-highlight); }
+
+/* ── Glassmorphism Card ──────────────────────────────────── */
+@layer components {
+  .glass-card {
+    @apply rounded-2xl border backdrop-blur-md;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-card-elevated {
+    @apply glass-card;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  /* ── Glow Button ─────────────────────────────────────── */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-xl overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, #E94560, #c72040);
+    color: white;
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 40px rgba(233, 69, 96, 0.7);
+    transform: translateY(-2px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-xl border transition-all duration-300;
+    border-color: var(--color-highlight);
+    color: var(--color-highlight);
+    background: transparent;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+  .btn-secondary:hover {
+    background: rgba(233, 69, 96, 0.1);
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all duration-300;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .btn-ghost:hover { color: white; background: rgba(255, 255, 255, 0.05); }
+
+  /* ── Input Field ─────────────────────────────────────── */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl text-white placeholder-gray-500 outline-none transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-body);
+  }
+  .input-field:focus {
+    border-color: var(--color-highlight);
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* ── Heading ─────────────────────────────────────────── */
+  .heading-xl {
+    @apply text-4xl md:text-5xl lg:text-6xl font-black tracking-tight;
+    font-family: var(--font-heading);
+    background: linear-gradient(135deg, #fff 0%, #E94560 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .heading-lg {
+    @apply text-2xl md:text-3xl font-bold;
+    font-family: var(--font-heading);
+    color: white;
+  }
+
+  /* ── Badge ───────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold;
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+  }
+  .badge-highlight {
+    @apply badge;
+    background: rgba(233, 69, 96, 0.2);
+    border: 1px solid rgba(233, 69, 96, 0.4);
+    color: #E94560;
+  }
+  .badge-success {
+    @apply badge;
+    background: rgba(52, 211, 153, 0.2);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #34D399;
+  }
+  .badge-warning {
+    @apply badge;
+    background: rgba(251, 191, 36, 0.2);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    color: #FBBF24;
+  }
+
+  /* ── Neon Divider ────────────────────────────────────── */
+  .divider-glow {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #E94560, transparent);
+    opacity: 0.5;
+  }
+
+  /* ── Loading Skeleton ────────────────────────────────── */
+  .skeleton {
+    @apply rounded-xl animate-pulse;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* ── Page Layout ─────────────────────────────────────── */
+  .page-container {
+    @apply min-h-screen;
+    background: linear-gradient(180deg, #0D0D1A 0%, #1A1A2E 50%, #16213E 100%);
+  }
+
+  /* ── Nav Link ────────────────────────────────────────── */
+  .nav-link {
+    @apply relative px-4 py-2 text-sm font-medium text-gray-300 transition-colors duration-200 rounded-lg;
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+  }
+  .nav-link:hover, .nav-link.active { color: white; background: rgba(233, 69, 96, 0.1); }
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: var(--color-highlight);
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--color-highlight);
+  }
+}
+
+/* ── Shimmer Animation ───────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── VR Store Canvas Overlay ─────────────────────────────── */
+.vr-canvas-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.vr-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.vr-hud > * {
+  pointer-events: auto;
+}
+
+/* ── Chatbot ─────────────────────────────────────────────── */
+.chat-bubble-user {
+  @apply px-4 py-2 rounded-2xl rounded-br-sm text-sm max-w-xs;
+  background: linear-gradient(135deg, #E94560, #c72040);
+  color: white;
+}
+
+.chat-bubble-bot {
+  @apply px-4 py-2 rounded-2xl rounded-bl-sm text-sm max-w-xs;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+}
+
+/* ── Emotion Badge Animations ───────────────────────────── */
+.emotion-badge {
+  @apply badge animate-bounce-slow;
+}
+
+/* ── High Contrast Mode ──────────────────────────────────── */
+@media (prefers-contrast: high) {
+  .glass-card { border: 2px solid white; }
+  .btn-primary { background: #E94560; box-shadow: none; }
+  .input-field { border: 2px solid white; }
+}
+
+/* ── Reduced Motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Font Scale Accessibility ────────────────────────────── */
+.font-small  { font-size: 0.875rem; }
+.font-medium { font-size: 1rem; }
+.font-large  { font-size: 1.125rem; }

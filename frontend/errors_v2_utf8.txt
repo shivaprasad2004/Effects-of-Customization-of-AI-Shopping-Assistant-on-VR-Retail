@@ -1,0 +1,7 @@
+﻿src/components/ProductCards/ProductComparison.tsx(4,29): error TS2614: Module '"../../store/productSlice"' has no exported member 'clearCompare'. Did you mean to use 'import clearCompare from "../../store/productSlice"' instead?
+src/hooks/useVoice.ts(39,22): error TS2345: Argument of type 'AsyncThunkAction<any, { message: string; sessionId: string | null; history: ChatMessage[]; }, AsyncThunkConfig>' is not assignable to parameter of type 'UnknownAction'.
+src/pages/Profile.tsx(90,72): error TS2345: Argument of type '(f: { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }) => { theme: string; name: string; musicEnabled: boolean; }' is not assignable to parameter of type 'SetStateAction<{ name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }>'.
+  Type '(f: { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }) => { theme: string; name: string; musicEnabled: boolean; }' is not assignable to type '(prevState: { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }) => { name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }'.
+    Call signature return types '{ theme: string; name: string; musicEnabled: boolean; }' and '{ name: string; theme: "futuristic" | "cozy" | "minimalist"; musicEnabled: boolean; }' are incompatible.
+      The types of 'theme' are incompatible between these types.
+        Type 'string' is not assignable to type '"futuristic" | "cozy" | "minimalist"'.
