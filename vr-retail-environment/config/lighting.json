@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "global": {
+    "ambient": { "color": "#B0BEC5", "intensity": 0.15 },
+    "fog": { "color": "#0A0A1A", "near": 20, "far": 80 },
+    "skybox": { "color": "#0A0A1A", "type": "gradient-dome" }
+  },
+  "zones": {
+    "entrance": {
+      "lights": [
+        { "type": "point", "position": [0, 12, 0], "color": "#E94560", "intensity": 0.8, "distance": 30 },
+        { "type": "spot", "position": [0, 14, 0], "color": "#FFFFFF", "intensity": 0.5, "angle": 0.6, "penumbra": 0.5, "castShadow": true }
+      ],
+      "emissiveStrips": [
+        { "position": [0, 0.1, -8], "length": 20, "color": "#E94560" },
+        { "position": [0, 0.1, 8], "length": 20, "color": "#E94560" }
+      ]
+    },
+    "fashion": {
+      "lights": [
+        { "type": "point", "position": [-15, 8, -15], "color": "#FF6B85", "intensity": 0.4, "distance": 20 },
+        { "type": "spot", "position": [-15, 12, -15], "color": "#FFE0E6", "intensity": 0.3, "angle": 0.8, "penumbra": 0.6, "castShadow": true }
+      ],
+      "neonSign": { "text": "FASHION", "position": [-15, 6, -15], "color": "#FF6B85" }
+    },
+    "electronics": {
+      "lights": [
+        { "type": "point", "position": [15, 8, -15], "color": "#4FC3F7", "intensity": 0.4, "distance": 20 },
+        { "type": "spot", "position": [15, 12, -15], "color": "#E1F5FE", "intensity": 0.3, "angle": 0.8, "penumbra": 0.6, "castShadow": true }
+      ],
+      "neonSign": { "text": "ELECTRONICS", "position": [15, 6, -15], "color": "#4FC3F7" }
+    },
+    "furniture": {
+      "lights": [
+        { "type": "point", "position": [0, 8, 15], "color": "#81C784", "intensity": 0.4, "distance": 20 },
+        { "type": "spot", "position": [0, 12, 15], "color": "#E8F5E9", "intensity": 0.3, "angle": 0.8, "penumbra": 0.6, "castShadow": true }
+      ],
+      "neonSign": { "text": "FURNITURE", "position": [0, 6, 15], "color": "#81C784" }
+    },
+    "checkout": {
+      "lights": [
+        { "type": "point", "position": [-20, 8, 15], "color": "#FFB74D", "intensity": 0.3, "distance": 15 }
+      ],
+      "neonSign": { "text": "CHECKOUT", "position": [-20, 6, 15], "color": "#FFB74D" }
+    }
+  }
+}

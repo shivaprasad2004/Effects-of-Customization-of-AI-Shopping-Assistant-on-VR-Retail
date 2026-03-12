@@ -37,7 +37,8 @@ export default function Profile() {
                     </div>
                     <div className="text-center md:text-left">
                         <h1 className="heading-xl text-3xl mb-2">{user.name}</h1>
-                        <p className="text-white/40 mb-4">{user.email}</p>
+                        <p className="text-white/40 mb-1">Email: {user.email}</p>
+                        <p className="text-white/40 mb-4">Username: {user.email.split('@')[0]}</p>
                         <div className="flex flex-wrap justify-center md:justify-start gap-2">
                             <span className="badge-highlight">GROUP {user.groupType}</span>
                             <span className="badge-success lowercase capitalize">{user.role}</span>

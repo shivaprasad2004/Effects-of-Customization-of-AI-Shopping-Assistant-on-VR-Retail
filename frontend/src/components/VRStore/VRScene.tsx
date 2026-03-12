@@ -4,6 +4,7 @@ import { RootState } from '../../store';
 import StoreEnvironment from './StoreEnvironment';
 import ZoneManager from './ZoneManager';
 import VRPlayer from './VRPlayer';
+import ChatAvatar from './ChatAvatar';
 
 /**
  * VRScene: Orchestrates the 3D world contents.
@@ -22,6 +23,9 @@ export default function VRScene() {
 
             {/* Permanent Architecture */}
             <StoreEnvironment />
+
+            {/* AI Assistant Avatar */}
+            <ChatAvatar />
 
             {/* Dynamic Zone Contents */}
             <ZoneManager currentZone={vrZone} />

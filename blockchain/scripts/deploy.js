@@ -1,4 +1,4 @@
-const hre = require("hardhat");
+import hre from "hardhat";
 
 async function main() {
     console.log("🚀 Deploying AI-Powered VR Retail Smart Contracts...");

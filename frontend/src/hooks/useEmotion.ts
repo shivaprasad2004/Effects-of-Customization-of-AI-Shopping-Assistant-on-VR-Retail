@@ -28,7 +28,7 @@ export function useEmotion() {
                 faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
             ]);
             modelsLoaded.current = true;
-            console.log('✅ face-api.js models loaded');
+            console.log('face-api.js models loaded');
         } catch (err) {
             console.error('face-api model load failed:', err);
         }
@@ -60,10 +60,10 @@ export function useEmotion() {
 
                 if (!detection) return;
 
-                // Find dominant emotion
+                // Find dominant emotion from client-side detection
                 const expressions = detection.expressions;
                 const dominant = Object.entries(expressions).reduce<[string, number]>(
-                    (max, curr) => (curr[1] > max[1] ? curr as [string, number] : max),
+                    (max, curr) => (curr[1] > max[1] ? (curr as [string, number]) : max),
                     ['neutral', 0]
                 );
 
@@ -74,25 +74,39 @@ export function useEmotion() {
                 if (confidence > 0.4) {
                     dispatch(setEmotion({ emotion, confidence }));
 
-                    // Log to backend
+                    // Also send to backend AI service for server-side classification
                     if (currentSessionId) {
-                        api.post('/emotion/log', {
-                            sessionId: currentSessionId,
-                            emotion,
-                            confidence,
-                            dominantEmotions: Object.entries(expressions).map(([e, s]) => ({ emotion: e, score: s })),
-                        }).catch(() => { }); // Fire-and-forget
+                        try {
+                            const canvas = faceapi.createCanvasFromMedia(videoRef.current);
+                            const displaySize = { width: videoRef.current.width, height: videoRef.current.height };
+                            faceapi.matchDimensions(canvas, displaySize);
+
+                            canvas.toBlob((blob) => {
+                                if (!blob) return;
+                                const formData = new FormData();
+                                formData.append('file', blob, 'face.jpg');
+
+                                api.post('/emotion/classify', formData, {
+                                    headers: { 'Content-Type': 'multipart/form-data' },
+                                }).then((res) => {
+                                    const { dominant_emotion, confidence: serverConf } = res.data;
+                                    if (dominant_emotion) {
+                                        dispatch(setEmotion({ emotion: dominant_emotion, confidence: serverConf }));
+                                    }
+                                }).catch(() => { }); // Fire-and-forget
+                            });
+                        } catch (_) { }
                     }
                 }
             } catch (_) { }
-        }, 2000); // Detect every 2 seconds
+        }, 2000);
     }, [consentGiven, currentSessionId, dispatch, loadModels]);
 
     /** Stop webcam and detection */
     const stopDetection = useCallback(() => {
         clearInterval(intervalRef.current);
         if (videoRef.current?.srcObject) {
-            (videoRef.current.srcObject as MediaStream).getTracks().forEach(t => t.stop());
+            (videoRef.current.srcObject as MediaStream).getTracks().forEach((t) => t.stop());
             videoRef.current.srcObject = null;
         }
     }, []);
@@ -101,7 +115,7 @@ export function useEmotion() {
         if (isActive && consentGiven) startDetection();
         else stopDetection();
         return () => stopDetection();
-    }, [isActive, consentGiven]);
+    }, [isActive, consentGiven, startDetection, stopDetection]);
 
     return { videoRef };
 }

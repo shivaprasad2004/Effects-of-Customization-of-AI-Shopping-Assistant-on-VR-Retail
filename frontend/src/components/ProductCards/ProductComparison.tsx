@@ -59,7 +59,7 @@ export default function ProductComparison() {
                             <tbody className="text-sm">
                                 <tr>
                                     <td className="p-4 border-b border-white/5 font-bold text-white/60">Price</td>
-                                    {compareList.map(p => <td key={p._id} className="p-4 border-b border-white/5 text-highlight font-black">${p.price}</td>)}
+                                    {compareList.map(p => <td key={p._id} className="p-4 border-b border-white/5 text-highlight font-black">₹{p.price}</td>)}
                                 </tr>
                                 <tr>
                                     <td className="p-4 border-b border-white/5 font-bold text-white/60">Rating</td>

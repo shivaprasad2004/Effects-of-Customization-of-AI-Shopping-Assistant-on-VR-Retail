@@ -1,0 +1,68 @@
+{
+  "version": "1.0.0",
+  "floor": {
+    "type": "MeshReflectorMaterial",
+    "color": "#080812",
+    "metalness": 0.6,
+    "roughness": 0.8,
+    "mirror": 0.8,
+    "blur": [400, 200],
+    "resolution": 1024
+  },
+  "walls": {
+    "type": "MeshStandardMaterial",
+    "color": "#16213E",
+    "metalness": 0.3,
+    "roughness": 0.7,
+    "opacity": 0.9
+  },
+  "pillars": {
+    "type": "MeshStandardMaterial",
+    "color": "#16213E",
+    "metalness": 0.95,
+    "roughness": 0.05
+  },
+  "ceiling": {
+    "type": "MeshStandardMaterial",
+    "color": "#0D0D1A",
+    "opacity": 0.9,
+    "transparent": true
+  },
+  "displays": {
+    "pedestal": {
+      "type": "MeshStandardMaterial",
+      "color": "#16213E",
+      "metalness": 0.95,
+      "roughness": 0.05
+    },
+    "ring": {
+      "type": "MeshStandardMaterial",
+      "color": "#E94560",
+      "emissive": "#E94560",
+      "emissiveIntensity": 2,
+      "opacity": 0.7,
+      "transparent": true
+    },
+    "disc": {
+      "type": "MeshStandardMaterial",
+      "color": "#0F3460",
+      "emissive": "#0F3460",
+      "emissiveIntensity": 0.5,
+      "metalness": 0.9,
+      "roughness": 0.1,
+      "opacity": 0.3,
+      "transparent": true
+    }
+  },
+  "neonStrips": {
+    "primary": { "color": "#E94560", "emissiveIntensity": 4 },
+    "secondary": { "color": "#0F3460", "emissiveIntensity": 3 },
+    "accent": { "color": "#4FC3F7", "emissiveIntensity": 3 }
+  },
+  "grid": {
+    "size": 100,
+    "divisions": 60,
+    "color1": "#0F3460",
+    "color2": "#0A2445"
+  }
+}

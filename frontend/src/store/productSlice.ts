@@ -1,10 +1,25 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import api from '../services/api';
 
+export interface ConfiguratorOptions {
+    colors: { name: string; hex: string; imageUrl?: string }[];
+    materials: { name: string; texture: string; roughness: number; metalness: number }[];
+    sizes: string[];
+}
+
+export interface CRMInsights {
+    targetAudience: string;
+    conversionRate: number;
+    engagementScore: number;
+    avgSessionTime: number;
+    demographics: string;
+}
+
 export interface Product {
     _id: string;
     name: string;
-    category: 'fashion' | 'electronics' | 'furniture' | 'accessories';
+    category: string;
+    subcategory?: string;
     description: string;
     price: number;
     originalPrice?: number;
@@ -25,10 +40,26 @@ export interface Product {
     ipfsCertificateUrl?: string;
     featured: boolean;
     newArrival: boolean;
+    stock: number;
+    lowStock?: boolean;
+    liveViewers?: number;
+    flashSale?: boolean;
+    flashEndsAt?: string;
+    specialOffer?: string;
+    discountPrice?: number;
+    // New tech fields
+    arEnabled?: boolean;
+    arType?: 'try-on' | 'room-placement' | '360-view' | null;
+    displayMode?: 'standard' | 'kiosk' | 'configurator' | null;
+    configuratorOptions?: ConfiguratorOptions;
+    model3DConfig?: { defaultColor: string; defaultMaterial: string; rotatable: boolean; scalable: boolean };
+    crmInsights?: CRMInsights;
+    showcase?: boolean;
 }
 
 interface ProductState {
     products: Product[];
+    showcaseProducts: Product[];
     selectedProduct: Product | null;
     compareList: Product[];
     cart: { product: Product; quantity: number; selectedSize?: string; selectedColor?: string }[];
@@ -42,23 +73,13 @@ interface ProductState {
 }
 
 const initialState: ProductState = {
-    products: [], selectedProduct: null, compareList: [], cart: [],
+    products: [], showcaseProducts: [], selectedProduct: null, compareList: [], cart: [],
     recommendations: [], trending: [], loading: false, error: null,
     filters: { category: '', minPrice: 0, maxPrice: 10000, search: '' },
     total: 0, page: 1,
 };
 
 // ── Thunks ────────────────────────────────────────────────────
-export const fetchProducts = createAsyncThunk(
-    'product/fetchAll',
-    async (params: Record<string, any> = {}, { rejectWithValue }) => {
-        try {
-            const res = await api.get('/products', { params });
-            return res.data;
-        } catch (err: any) { return rejectWithValue(err.response?.data?.message); }
-    }
-);
-
 export const fetchProductById = createAsyncThunk(
     'product/fetchById',
     async (id: string, { rejectWithValue }) => {
@@ -76,6 +97,49 @@ export const fetchTrending = createAsyncThunk(
             const res = await api.get('/recommend/trending');
             return res.data.products;
         } catch (err: any) { return rejectWithValue(err.response?.data?.message); }
+    }
+);
+
+export const fetchShowcase = createAsyncThunk(
+    'product/fetchShowcase',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await api.get('/products/showcase');
+            // Fallback to hardcoded data if API returns empty
+            if (!res.data.products || res.data.products.length === 0) {
+                const { showcaseProducts } = await import('../data/showcaseProducts');
+                return showcaseProducts;
+            }
+            return res.data.products;
+        } catch (err: any) {
+            const { showcaseProducts } = await import('../data/showcaseProducts');
+            return showcaseProducts;
+        }
+    }
+);
+
+export const fetchProducts = createAsyncThunk(
+    'product/fetchAll',
+    async (params: Record<string, any> = {}, { rejectWithValue }) => {
+        try {
+            const res = await api.get('/products', { params });
+            // If API returns empty, fallback to showcase data with filtering
+            if (!res.data.products || res.data.products.length === 0) {
+                const { showcaseProducts } = await import('../data/showcaseProducts');
+                let filtered = showcaseProducts as Product[];
+                if (params.category) filtered = filtered.filter(p => p.category === params.category);
+                if (params.subcategory) filtered = filtered.filter(p => (p as any).subcategory === params.subcategory);
+                return { products: filtered, total: filtered.length, page: 1, pages: 1 };
+            }
+            return res.data;
+        } catch (err: any) {
+            // Fallback on error too
+            const { showcaseProducts } = await import('../data/showcaseProducts');
+            let filtered = showcaseProducts as Product[];
+            if (params.category) filtered = filtered.filter(p => p.category === params.category);
+            if (params.subcategory) filtered = filtered.filter(p => (p as any).subcategory === params.subcategory);
+            return { products: filtered, total: filtered.length, page: 1, pages: 1 };
+        }
     }
 );
 
@@ -125,6 +189,7 @@ const productSlice = createSlice({
         builder.addCase(fetchProducts.rejected, (s, a) => { s.loading = false; s.error = a.payload as string; });
         builder.addCase(fetchProductById.fulfilled, (s, a) => { s.selectedProduct = a.payload; });
         builder.addCase(fetchTrending.fulfilled, (s, a) => { s.trending = a.payload || []; });
+        builder.addCase(fetchShowcase.fulfilled, (s, a) => { s.showcaseProducts = a.payload || []; });
         builder.addCase(fetchRecommendations.fulfilled, (s, a) => { s.recommendations = a.payload || []; });
     },
 });

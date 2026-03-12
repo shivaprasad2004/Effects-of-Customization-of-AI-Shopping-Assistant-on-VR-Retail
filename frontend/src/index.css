@@ -256,3 +256,163 @@ body {
 .font-small  { font-size: 0.875rem; }
 .font-medium { font-size: 1rem; }
 .font-large  { font-size: 1.125rem; }
+
+/* ═══════════════════════════════════════════════════════════
+   Premium 3D Viewer Animations & Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Scanning Grid Line ──────────────────────────────────── */
+@keyframes scanLine {
+  0%   { transform: translateZ(0) translateY(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateZ(0) translateY(100%); opacity: 0; }
+}
+.animate-scan-line {
+  animation: scanLine 4s ease-in-out infinite;
+}
+
+/* ── Hotspot Pulse ───────────────────────────────────────── */
+@keyframes hotspotPulse {
+  0%   { transform: scale(1); opacity: 0.8; box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.6); }
+  50%  { transform: scale(1.15); opacity: 1; box-shadow: 0 0 0 8px rgba(233, 69, 96, 0); }
+  100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 0 0 rgba(233, 69, 96, 0); }
+}
+.animate-hotspot-pulse {
+  animation: hotspotPulse 2s ease-in-out infinite;
+}
+
+/* ── Glass Panel Slide ───────────────────────────────────── */
+@keyframes glassPanelSlideIn {
+  0%   { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes glassPanelSlideOut {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+.animate-glass-slide-in {
+  animation: glassPanelSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-glass-slide-out {
+  animation: glassPanelSlideOut 0.3s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+/* ── Particle Float Variants ─────────────────────────────── */
+@keyframes particleFloat1 {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.6; }
+  25%      { transform: translate3d(10px, -20px, 5px); opacity: 1; }
+  50%      { transform: translate3d(-5px, -40px, -5px); opacity: 0.8; }
+  75%      { transform: translate3d(15px, -20px, 10px); opacity: 1; }
+}
+@keyframes particleFloat2 {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.4; }
+  33%      { transform: translate3d(-15px, -30px, 8px); opacity: 0.9; }
+  66%      { transform: translate3d(8px, -50px, -3px); opacity: 0.6; }
+}
+@keyframes particleFloat3 {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.5; }
+  20%      { transform: translate3d(20px, -15px, -10px); opacity: 0.8; }
+  40%      { transform: translate3d(-10px, -35px, 5px); opacity: 1; }
+  60%      { transform: translate3d(5px, -50px, 15px); opacity: 0.7; }
+  80%      { transform: translate3d(-15px, -25px, -5px); opacity: 0.9; }
+}
+.animate-particle-1 { animation: particleFloat1 6s ease-in-out infinite; }
+.animate-particle-2 { animation: particleFloat2 8s ease-in-out infinite; }
+.animate-particle-3 { animation: particleFloat3 10s ease-in-out infinite; }
+
+/* ── Neon Text Glow ──────────────────────────────────────── */
+@keyframes neonGlow {
+  0%, 100% { text-shadow: 0 0 4px rgba(233, 69, 96, 0.4), 0 0 8px rgba(233, 69, 96, 0.2); }
+  50%      { text-shadow: 0 0 8px rgba(233, 69, 96, 0.8), 0 0 16px rgba(233, 69, 96, 0.4), 0 0 24px rgba(233, 69, 96, 0.2); }
+}
+.animate-neon-glow {
+  animation: neonGlow 3s ease-in-out infinite;
+}
+
+/* ── Cinematic Letterbox Bars ────────────────────────────── */
+@keyframes letterboxIn {
+  0%   { height: 0; }
+  100% { height: 60px; }
+}
+@keyframes letterboxOut {
+  0%   { height: 60px; }
+  100% { height: 0; }
+}
+.letterbox-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #000;
+  z-index: 60;
+  overflow: hidden;
+}
+.letterbox-bar-top { top: 0; }
+.letterbox-bar-bottom { bottom: 0; }
+.letterbox-in {
+  animation: letterboxIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.letterbox-out {
+  animation: letterboxOut 0.6s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+/* ── Typewriter Effect ───────────────────────────────────── */
+@keyframes typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+@keyframes blinkCaret {
+  0%, 100% { border-color: transparent; }
+  50%      { border-color: #E94560; }
+}
+.animate-typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #E94560;
+  animation: typewriter 1.5s steps(30) forwards, blinkCaret 0.8s step-end infinite;
+}
+
+/* ── Stagger Fade-In ─────────────────────────────────────── */
+@keyframes staggerFadeIn {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-stagger-in {
+  animation: staggerFadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* ── Premium Glass Control Bar ───────────────────────────── */
+.premium-glass-bar {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ── Active Tab Glow ─────────────────────────────────────── */
+.tab-glow-active {
+  box-shadow: 0 2px 8px rgba(233, 69, 96, 0.3), inset 0 -2px 0 #E94560;
+  background: rgba(233, 69, 96, 0.08);
+}
+
+/* ── Shimmer Flash (for color transitions) ───────────────── */
+@keyframes shimmerFlash {
+  0%   { opacity: 0; }
+  30%  { opacity: 0.6; }
+  100% { opacity: 0; }
+}
+.animate-shimmer-flash {
+  animation: shimmerFlash 0.6s ease-out forwards;
+}
+
+/* ── Spinning Wireframe Loader ───────────────────────────── */
+@keyframes wireframeSpin {
+  0%   { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+.animate-wireframe-spin {
+  animation: wireframeSpin 3s linear infinite;
+  transform-style: preserve-3d;
+}

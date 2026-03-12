@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import ProductDisplay from './ProductDisplay';
+import { RotatingDisplayShelf, PromotionalBanner } from './AnimatedDecorations';
 
 /**
  * ElectronicsZone: Renders products in the electronics category.
@@ -18,6 +19,12 @@ export default function ElectronicsZone({ active }: { active: boolean }) {
                 <planeGeometry args={[15, 15]} />
                 <meshStandardMaterial color="#0F3460" transparent opacity={0.05} />
             </mesh>
+
+            {/* Centerpiece rotating display shelf */}
+            <RotatingDisplayShelf position={[-5, 0, 5]} color="#0F3460" />
+
+            {/* Promotional Banner */}
+            <PromotionalBanner position={[-5, 5, 5]} text="TECH HUB" color="#4FC3F7" />
 
             {electronicsProducts.map((p, i) => {
                 const x = (i % 3) * -5;

@@ -16,7 +16,9 @@ export default function Navbar() {
     const { theme } = useSelector((state: RootState) => state.ui);
     const { loyaltyTokens } = user || {};
     const { walletAddress, connectWallet, isConnected } = useBlockchain();
+    const { notifications } = useSelector((state: RootState) => state.ui);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [notifOpen, setNotifOpen] = useState(false);
 
     function handleLogout() {
         dispatch(logout());
@@ -48,6 +50,7 @@ export default function Navbar() {
                     <NavLink to="/vr-store" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>VR Store</NavLink>
                     <NavLink to="/analytics" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Analytics</NavLink>
                     <NavLink to="/profile" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Profile</NavLink>
+                    <NavLink to="/documentation" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Documentation</NavLink>
                 </div>
 
                 {/* Right: Controls */}
@@ -58,6 +61,54 @@ export default function Navbar() {
                             🪙 {loyaltyTokens} SHOP
                         </div>
                     )}
+
+                    {/* Notifications */}
+                    <div className="relative">
+                        <button onClick={() => setNotifOpen(o => !o)} className="btn-ghost p-2 text-lg relative">
+                            🔔
+                            {notifications.length > 0 && (
+                                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-ping" />
+                            )}
+                        </button>
+
+                        <AnimatePresence>
+                            {notifOpen && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -8 }}
+                                    className="absolute right-0 mt-2 w-80 glass-card-elevated rounded-xl overflow-hidden z-50 p-4"
+                                >
+                                    <h4 className="text-xs font-bold text-white uppercase tracking-widest mb-4 flex items-center justify-between">
+                                        Recent Alerts
+                                        <span className="text-[10px] text-highlight">{notifications.length} NEW</span>
+                                    </h4>
+                                    <div className="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                                        {notifications.length === 0 ? (
+                                            <p className="text-[10px] text-white/30 text-center py-4 uppercase">No new alerts</p>
+                                        ) : (
+                                            notifications.map((n) => (
+                                                <div key={n.id} className="p-3 bg-white/5 rounded-lg border border-white/5 hover:border-highlight/20 transition-colors">
+                                                    <div className="flex items-center justify-between mb-1">
+                                                        <span className={`text-[8px] font-bold uppercase tracking-tighter ${
+                                                            n.type === 'discount' ? 'text-emerald-400' : 
+                                                            n.type === 'error' ? 'text-rose-400' : 'text-blue-400'
+                                                        }`}>
+                                                            {n.type}
+                                                        </span>
+                                                        <span className="text-[8px] text-white/20">
+                                                            {new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-[10px] text-white/80 leading-relaxed">{n.message}</p>
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
 
                     {/* Cart */}
                     <NavLink to="/checkout" className="relative btn-ghost p-2">
@@ -78,14 +129,6 @@ export default function Navbar() {
                     ) : (
                         <button onClick={connectWallet} className="btn-secondary text-xs px-3 py-1.5 hidden md:flex">Connect Wallet</button>
                     )}
-
-                    {/* Theme toggle */}
-                    <button onClick={() => dispatch(toggleTheme())} className="btn-ghost p-2">
-                        {theme === 'dark' ? '☀️' : '🌙'}
-                    </button>
-
-                    {/* Music toggle */}
-                    <button onClick={() => dispatch(toggleMusic())} className="btn-ghost p-2">🎵</button>
 
                     {/* User avatar / logout */}
                     <div className="relative">

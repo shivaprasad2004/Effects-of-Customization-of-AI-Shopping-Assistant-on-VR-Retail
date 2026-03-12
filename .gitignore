@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+*/node_modules/
+package-lock.json
+*/package-lock.json
+
+# Build outputs
+dist/
+build/
+*/dist/
+*/build/
+out/
+
+# Python
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Environment variables
+.env
+*/.env
+
+# Logs
+*.log
+logs/
+*/logs/
+
+# Blockchain (Hardhat)
+artifacts/
+cache/
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+errors.txt
+errors_utf8.txt
+errors_v2.txt
+errors_v2_utf8.txt
+errors_v3.txt
+lint_errors.txt
+lint_errors_utf8.txt
+frontend/tsconfig.node.tsbuildinfo

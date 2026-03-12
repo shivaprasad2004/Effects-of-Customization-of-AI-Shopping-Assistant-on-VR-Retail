@@ -1,100 +1,159 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
-import { registerUser, clearError, GenderType } from '../store/authSlice';
-import { AppDispatch, RootState } from '../store';
+import { registerUser, clearError } from '../store/authSlice';
+import { useAppSelector } from '../store';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 
-const GENDERS: GenderType[] = ['male', 'female', 'non-binary', 'prefer-not-to-say'];
-
-interface RegisterForm {
-    name: string;
-    email: string;
-    password: string;
-    age: string;
-    gender: GenderType | '';
-}
-
 export default function Register() {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { loading, error } = useSelector((state: RootState) => state.auth);
-    const [form, setForm] = useState<RegisterForm>({ name: '', email: '', password: '', age: '', gender: '' });
-
-    const set = (field: keyof RegisterForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-        setForm(f => ({ ...f, [field]: e.target.value }));
+    const { loading, error } = useAppSelector((state) => state.auth);
+    const [form, setForm] = useState({ name: '', email: '', password: '' });
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         dispatch(clearError());
-        const result = await dispatch(registerUser({
-            name: form.name, email: form.email, password: form.password,
-            age: form.age ? parseInt(form.age) : undefined,
-            gender: form.gender || undefined,
-        }));
-        if (registerUser.fulfilled.match(result)) navigate('/onboarding');
+        const result = await dispatch(registerUser(form) as any);
+        if (registerUser.fulfilled.match(result)) {
+            navigate('/onboarding');
+        }
     }
 
     return (
-        <div className="page-container min-h-screen flex items-center justify-center p-4">
-            <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-highlight/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
+        <div className="min-h-screen bg-[#121212] flex flex-col lg:flex-row-reverse overflow-hidden font-sans">
+            {/* Right Side: Branding & Illustration (Reversed for visual variety) */}
+            <div className="lg:w-3/5 relative flex flex-col justify-center px-12 py-20 bg-slate-900 overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rose-500/10 blur-[120px] rounded-full z-0" />
+
+                <motion.div 
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="relative z-10 text-right"
+                >
+                    <div className="flex items-center justify-end gap-3 mb-8">
+                        <h1 className="text-3xl font-black tracking-tighter text-white uppercase">VR<span className="text-rose-500">Retail</span></h1>
+                        <div className="w-12 h-12 rounded-xl bg-rose-500 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-rose-500/20">V</div>
+                    </div>
+
+                    <h2 className="text-5xl md:text-7xl font-black text-white leading-none tracking-tighter mb-6">
+                        JOIN THE <br />
+                        <span className="text-rose-500">EXPERIENCE</span>
+                    </h2>
+                    <p className="text-slate-400 text-lg max-w-md mb-10 leading-relaxed ml-auto">
+                        Create an account to start your personalized journey in our AI-driven virtual store environment.
+                    </p>
+
+                    <button 
+                        onClick={() => navigate('/landing')}
+                        className="inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-full font-bold uppercase tracking-widest transition-all border border-white/10"
+                    >
+                        <span>←</span> Back to Story
+                    </button>
+                </motion.div>
+
+                {/* Illustration Watermark */}
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="absolute bottom-0 left-0 w-full max-w-lg pointer-events-none select-none opacity-80"
+                >
+                    <img 
+                        src="https://cdni.iconscout.com/illustration/premium/thumb/online-shopping-store-illustration-download-in-svg-png-gif-file-formats--e-commerce-digital-market-pack-business-illustrations-4631311.png" 
+                        alt="Shopping Illustration" 
+                        className="w-full h-auto object-contain flip-x"
+                        style={{ transform: 'scaleX(-1)' }}
+                    />
+                </motion.div>
             </div>
 
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
-                <div className="text-center mb-8">
-                    <h1 className="heading-xl text-4xl mb-2">Join the Study</h1>
-                    <p className="text-white/50 text-sm">Create your participant account</p>
-                </div>
-
-                <div className="glass-card-elevated p-8">
-                    {error && (
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                            className="mb-4 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
-                            {error}
-                        </motion.div>
-                    )}
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {([
-                            { id: 'reg-name', label: 'Full Name', type: 'text', field: 'name', placeholder: 'Jane Doe', required: true },
-                            { id: 'reg-email', label: 'Email', type: 'email', field: 'email', placeholder: 'you@example.com', required: true },
-                            { id: 'reg-password', label: 'Password', type: 'password', field: 'password', placeholder: '8+ characters', required: true },
-                            { id: 'reg-age', label: 'Age', type: 'number', field: 'age', placeholder: 'e.g. 22', required: false },
-                        ] as const).map(({ id, label, type, field, placeholder, required }) => (
-                            <div key={field}>
-                                <label className="block text-xs font-heading text-white/60 mb-1.5 uppercase tracking-wider">{label}</label>
-                                <input id={id} type={type} required={required} min={type === 'number' ? 13 : undefined} max={type === 'number' ? 100 : undefined}
-                                    className="input-field" placeholder={placeholder}
-                                    value={form[field]} onChange={set(field)} />
-                            </div>
-                        ))}
-
-                        <div>
-                            <label className="block text-xs font-heading text-white/60 mb-1.5 uppercase tracking-wider">Gender</label>
-                            <select id="reg-gender" className="input-field" value={form.gender} onChange={set('gender')}>
-                                <option value="">Prefer not to say</option>
-                                {GENDERS.map(g => <option key={g} value={g} className="bg-primary capitalize">{g}</option>)}
-                            </select>
+            {/* Left Side: Register Form */}
+            <div className="lg:w-2/5 flex flex-col justify-center items-center px-8 py-12 bg-[#F8F9FA] relative">
+                <div className="w-full max-w-md">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-white p-10 rounded-3xl shadow-2xl shadow-slate-200 border border-slate-100"
+                    >
+                        <div className="mb-10 text-center">
+                            <h3 className="text-3xl font-black text-slate-900 tracking-tighter mb-2 uppercase">Create Account</h3>
+                            <p className="text-slate-400 text-sm font-bold uppercase tracking-widest">Start your VR journey</p>
                         </div>
 
-                        <button type="submit" disabled={loading} className="btn-primary w-full mt-2" id="reg-submit">
-                            {loading ? <LoadingSpinner size="sm" /> : 'Create Account & Start →'}
-                        </button>
-                    </form>
+                        {error && (
+                            <motion.div 
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                className="mb-6 p-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-sm font-bold text-center"
+                            >
+                                {error}
+                            </motion.div>
+                        )}
 
-                    <p className="text-center text-sm text-white/40 mt-6">
-                        Already registered?{' '}
-                        <Link to="/login" className="text-highlight hover:underline font-medium">Sign in</Link>
-                    </p>
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4">Full Name</label>
+                                <input
+                                    type="text"
+                                    required
+                                    className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-rose-500 focus:bg-white transition-all text-slate-900 font-bold"
+                                    placeholder="Enter your name"
+                                    value={form.name}
+                                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4">Email Address</label>
+                                <input
+                                    type="email"
+                                    required
+                                    className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-rose-500 focus:bg-white transition-all text-slate-900 font-bold"
+                                    placeholder="Enter your email"
+                                    value={form.email}
+                                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-4">Password</label>
+                                <input
+                                    type="password"
+                                    required
+                                    className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-rose-500 focus:bg-white transition-all text-slate-900 font-bold"
+                                    placeholder="••••••••"
+                                    value={form.password}
+                                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full py-5 bg-slate-900 hover:bg-rose-600 text-white rounded-2xl font-black uppercase tracking-widest transition-all shadow-xl shadow-slate-200 disabled:opacity-50 active:scale-95"
+                            >
+                                {loading ? <LoadingSpinner size="sm" /> : 'Join the Store →'}
+                            </button>
+                        </form>
+
+                        <div className="mt-8 text-center">
+                            <p className="text-slate-400 text-sm font-bold">
+                                Already have an account? {' '}
+                                <Link to="/login" className="text-rose-500 hover:underline">Sign In</Link>
+                            </p>
+                        </div>
+                    </motion.div>
                 </div>
 
-                <p className="text-center text-xs text-white/20 mt-4">
-                    Your data is used only for research purposes. You will be assigned to Group A or B automatically.
-                </p>
-            </motion.div>
+                {/* Footer Copy */}
+                <div className="absolute bottom-8 text-[10px] text-slate-300 font-bold uppercase tracking-[0.2em]">
+                    © 2026 VR Retail Pro · Authorized Access Only
+                </div>
+            </div>
         </div>
     );
 }

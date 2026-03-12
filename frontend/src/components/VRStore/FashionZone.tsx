@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import ProductDisplay from './ProductDisplay';
+import { AnimatedMannequin, PromotionalBanner } from './AnimatedDecorations';
 
 /**
  * FashionZone: Renders products in the fashion category.
@@ -19,6 +20,13 @@ export default function FashionZone({ active }: { active: boolean }) {
                 <planeGeometry args={[15, 15]} />
                 <meshStandardMaterial color="#E94560" transparent opacity={0.05} />
             </mesh>
+
+            {/* Animated Mannequins at zone entrance */}
+            <AnimatedMannequin position={[0, 0, 0]} color="#FF6B85" />
+            <AnimatedMannequin position={[10, 0, 0]} color="#E94560" />
+
+            {/* Promotional Banner floating above */}
+            <PromotionalBanner position={[5, 5, 5]} text="FASHION COLLECTION" color="#FF6B85" />
 
             {/* Map products to 3D grid */}
             {fashionProducts.map((p, i) => {

@@ -1,4 +1,5 @@
 import { Text } from '@react-three/drei';
+import { FloatingShoppingBag, PromotionalBanner } from './AnimatedDecorations';
 
 /**
  * CheckoutZone: The payment and finalization area.
@@ -14,6 +15,12 @@ export default function CheckoutZone({ active }: { active: boolean }) {
                 <planeGeometry args={[10, 10]} />
                 <meshStandardMaterial color="#FBBF24" transparent opacity={0.1} />
             </mesh>
+
+            {/* Floating Shopping Bag near checkout */}
+            <FloatingShoppingBag position={[-3, 3, -3]} color="#FFB74D" />
+
+            {/* Promotional Banner */}
+            <PromotionalBanner position={[-5, 4, -5]} text="CHECKOUT" color="#FFB74D" />
 
             {/* Terminal Placeholder */}
             <mesh position={[-5, 1, -5]}>

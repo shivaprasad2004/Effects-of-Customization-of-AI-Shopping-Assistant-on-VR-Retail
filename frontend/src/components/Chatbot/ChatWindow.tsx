@@ -10,22 +10,19 @@ export default function ChatWindow() {
     const [input, setInput] = useState('');
     const scrollRef = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch<AppDispatch>();
-    const { messages, isOpen, isTyping } = useSelector((state: RootState) => state.chatbot);
+    const { messages, isOpen, isTyping, error } = useSelector((state: RootState) => state.chatbot);
     const { currentSessionId } = useSelector((state: RootState) => state.session);
     const { isListening, startListening, stopListening, speak } = useVoice();
 
-    // Auto-scroll to bottom on new messages
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     }, [messages, isTyping]);
 
-    // Voice output for bot responses
     useEffect(() => {
         const lastMessage = messages[messages.length - 1];
         if (lastMessage?.role === 'assistant' && !isTyping) {
-            // Small timeout to avoid overlapping with user voice end
             setTimeout(() => speak(lastMessage.content), 100);
         }
     }, [messages.length, isTyping, speak]);
@@ -52,9 +49,13 @@ export default function ChatWindow() {
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     onClick={() => dispatch(toggleChatbot())}
-                    className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-highlight text-white shadow-glow-pink flex items-center justify-center text-3xl z-50 hover:scale-110 transition-transform"
+                    className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-[#E94560] text-white shadow-[0_0_20px_rgba(233,69,96,0.5)] flex items-center justify-center text-3xl z-50 hover:scale-110 transition-transform overflow-hidden"
                 >
-                    🤖
+                    <img
+                        src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png"
+                        alt="AI Bot"
+                        className="w-10 h-10 object-contain"
+                    />
                 </motion.button>
             )}
 
@@ -72,7 +73,7 @@ export default function ChatWindow() {
                                 <div className="w-8 h-8 rounded-lg bg-gradient-glow flex items-center justify-center text-xl">🤖</div>
                                 <div>
                                     <h3 className="text-sm font-heading font-bold text-white leading-none">ShopBot AI</h3>
-                                    <span className="text-[10px] text-green-400 font-bold uppercase tracking-wider">Online · GPT-4</span>
+                                    <span className="text-[10px] text-green-400 font-bold uppercase tracking-wider">Online · AI Assistant</span>
                                 </div>
                             </div>
                             <button onClick={() => dispatch(toggleChatbot())} className="text-white/40 hover:text-white">✕</button>
@@ -92,7 +93,7 @@ export default function ChatWindow() {
                                 >
                                     <div className={m.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}>
                                         {m.content}
-                                        {m.intent && (
+                                        {m.intent && m.intent !== 'general' && (
                                             <div className="mt-2 pt-2 border-t border-white/10 text-[9px] uppercase tracking-tighter font-bold opacity-50">
                                                 Intent: {m.intent}
                                             </div>
@@ -104,6 +105,14 @@ export default function ChatWindow() {
                                 <div className="flex justify-start">
                                     <div className="chat-bubble-bot py-3">
                                         <LoadingSpinner size="sm" />
+                                    </div>
+                                </div>
+                            )}
+                            {/* Error state */}
+                            {error && !isTyping && (
+                                <div className="flex justify-center">
+                                    <div className="px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-[11px] text-center">
+                                        Failed to get response. Please try again.
                                     </div>
                                 </div>
                             )}

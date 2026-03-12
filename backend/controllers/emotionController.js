@@ -37,6 +37,13 @@ async function logEmotion(req, res, next) {
             io.to('admin').emit('emotion:update', { userId: req.user.id, emotion, sessionId, timestamp: new Date() });
         }
 
+        // Adaptive AI logic: Modify user state based on emotion
+        const User = require('../models/User');
+        if (emotion === 'happy' || emotion === 'surprised') {
+            // Reward positive engagement
+            await User.findByIdAndUpdate(req.user.id, { $inc: { loyaltyTokens: 5 } });
+        }
+
         // Check frustration count — offer discount if frustrated 3+ times in last 10 events
         const recentEmotions = await EmotionLog.find({ sessionId }).sort({ timestamp: -1 }).limit(10);
         const frustrationCount = recentEmotions.filter((e) => e.emotion === 'angry' || e.emotion === 'disgusted').length;

@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema(
         description: { type: String, required: true },
         price: { type: Number, required: true, min: 0 },
         originalPrice: { type: Number },
-        currency: { type: String, default: 'USD' },
+        currency: { type: String, default: 'INR' },
         images: [{ type: String }], // S3 URLs
         model3DUrl: { type: String }, // GLTF/GLB on S3
         thumbnailUrl: { type: String },
@@ -68,6 +68,31 @@ const productSchema = new mongoose.Schema(
             y: { type: Number, default: 0 },
             z: { type: Number, default: 0 },
         },
+        // 3D Configurator options
+        configuratorOptions: {
+            colors: [{ name: String, hex: String, imageUrl: String }],
+            materials: [{ name: String, texture: String, roughness: { type: Number, default: 0.5 }, metalness: { type: Number, default: 0 } }],
+            sizes: [String],
+        },
+        // AR & Display
+        arEnabled: { type: Boolean, default: false },
+        arType: { type: String, enum: ['try-on', 'room-placement', '360-view', null], default: null },
+        displayMode: { type: String, enum: ['standard', 'kiosk', 'configurator', null], default: 'standard' },
+        model3DConfig: {
+            defaultColor: { type: String, default: '#FFFFFF' },
+            defaultMaterial: { type: String, default: 'standard' },
+            rotatable: { type: Boolean, default: true },
+            scalable: { type: Boolean, default: true },
+        },
+        // CRM Insights (simulated Dynamics 365 / Salesforce)
+        crmInsights: {
+            targetAudience: { type: String },
+            conversionRate: { type: Number },
+            engagementScore: { type: Number },
+            avgSessionTime: { type: Number },
+            demographics: { type: String },
+        },
+        showcase: { type: Boolean, default: false },
         isActive: { type: Boolean, default: true },
         featured: { type: Boolean, default: false },
         newArrival: { type: Boolean, default: false },

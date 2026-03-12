@@ -58,11 +58,23 @@ async function register(req, res, next) {
  * POST /api/auth/login
  * Login with email + password. Returns access and refresh tokens.
  */
+const ALLOWED_EMAILS = [
+    '22eg105h13@anurag.edu.in',
+    '22eg105h30@anurag.edu.in',
+    '22eg105h37@anurag.edu.in',
+    '22eg105h40@anurag.edu.in'
+];
+
 async function login(req, res, next) {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
             return res.status(400).json({ success: false, message: 'Email and password are required' });
+        }
+
+        // Restriction logic: Only allow specific emails
+        if (!ALLOWED_EMAILS.includes(email.toLowerCase())) {
+            return res.status(403).json({ success: false, message: 'Access denied. Only authorized users can log in.' });
         }
 
         const user = await User.findOne({ email }).select('+passwordHash +refreshToken');

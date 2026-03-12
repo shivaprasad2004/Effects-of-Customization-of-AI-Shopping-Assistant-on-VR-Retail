@@ -78,7 +78,7 @@ export default function Checkout() {
                                         <p className="text-[10px] text-white/40 uppercase tracking-widest">{item.product.category}</p>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-white font-black">${item.product.price}</p>
+                                        <p className="text-white font-black">₹{item.product.price}</p>
                                         <p className="text-[10px] text-white/30">Qty: {item.quantity}</p>
                                         <button
                                             onClick={() => dispatch(removeFromCart(item.product._id))}
@@ -99,11 +99,11 @@ export default function Checkout() {
                             <div className="space-y-4 text-sm mb-6 pb-6 border-b border-white/10">
                                 <div className="flex justify-between">
                                     <span className="text-white/40">Subtotal</span>
-                                    <span className="text-white font-medium">${subtotal.toFixed(2)}</span>
+                                    <span className="text-white font-medium">₹{subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-white/40">VR Platform Tax (8%)</span>
-                                    <span className="text-white font-medium">${tax.toFixed(2)}</span>
+                                    <span className="text-white font-medium">₹{tax.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-white/40">Shipping</span>
@@ -112,7 +112,7 @@ export default function Checkout() {
                             </div>
                             <div className="flex justify-between mb-8 items-end">
                                 <span className="text-white/60 font-heading text-xs tracking-widest">TOTAL</span>
-                                <span className="text-4xl font-black text-white">${total.toFixed(2)}</span>
+                                <span className="text-4xl font-black text-white">₹{total.toFixed(2)}</span>
                             </div>
 
                             <div className="space-y-3">

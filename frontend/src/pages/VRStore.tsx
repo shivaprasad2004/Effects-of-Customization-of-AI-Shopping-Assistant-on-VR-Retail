@@ -63,9 +63,6 @@ export default function VRStore() {
                 {/* Bottom Left: Emotion Mirror */}
                 <EmotionDetector />
 
-                {/* Bottom Right: Chat Assistant */}
-                <ChatWindow />
-
                 {/* Interaction Crosshair */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border-2 border-highlight/50 rounded-full flex items-center justify-center pointer-events-none">
                     <div className="w-1 h-1 bg-highlight rounded-full" />

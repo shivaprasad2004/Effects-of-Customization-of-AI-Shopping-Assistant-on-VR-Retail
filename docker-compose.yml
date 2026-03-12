@@ -125,6 +125,48 @@ services:
     volumes:
       - redis_data:/data
 
+  # ── Recommendation Engine ────────────────────────────────
+  recommendation-engine:
+    build:
+      context: ./recommendation-engine
+      dockerfile: Dockerfile
+    container_name: vr-recommendation
+    ports:
+      - '8081:8081'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8081/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # ── Emotion Recognition ─────────────────────────────────
+  emotion-recognition:
+    build:
+      context: ./emotion-recognition-system
+      dockerfile: Dockerfile
+    container_name: vr-emotion
+    ports:
+      - '8082:8082'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8082/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # ── Blockchain Payment ──────────────────────────────────
+  blockchain-payment:
+    build:
+      context: ./blockchain-payment-system
+      dockerfile: Dockerfile
+    container_name: vr-blockchain-payment
+    ports:
+      - '8083:8083'
+    environment:
+      - RPC_URL=http://hardhat-node:8545
+    restart: unless-stopped
+
   # ── Nginx ────────────────────────────────────────────────
   nginx:
     image: nginx:1.25-alpine

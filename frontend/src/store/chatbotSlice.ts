@@ -37,10 +37,20 @@ export const sendChatMessage = createAsyncThunk(
         { rejectWithValue }
     ) => {
         try {
+            // Build proper query/response pairs from conversation history
+            const historyPairs: { query: string; response: string }[] = [];
+            const msgs = data.history.slice(-20);
+            for (let i = 0; i < msgs.length - 1; i++) {
+                if (msgs[i].role === 'user' && msgs[i + 1]?.role === 'assistant') {
+                    historyPairs.push({ query: msgs[i].content, response: msgs[i + 1].content });
+                    i++; // skip the assistant message
+                }
+            }
+
             const res = await api.post('/chatbot/message', {
                 message: data.message,
                 sessionId: data.sessionId,
-                history: data.history.slice(-10).map(m => ({ query: m.content, response: '' })),
+                history: historyPairs.slice(-10),
             });
             return res.data;
         } catch (err: any) { return rejectWithValue(err.response?.data?.message || 'Chat failed'); }

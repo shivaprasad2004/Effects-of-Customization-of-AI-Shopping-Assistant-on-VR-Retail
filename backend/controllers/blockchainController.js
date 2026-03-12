@@ -5,44 +5,64 @@ const logger = require('../utils/logger');
 
 /**
  * POST /api/blockchain/verify/:productId
- * Verify a product's authenticity certificate on-chain via AI service.
+ * Verify a product's authenticity certificate on-chain.
+ * Simulates Hyperledger Fabric verification by checking immutable hashes and IPFS links.
  */
 async function verifyProduct(req, res, next) {
     try {
         const product = await Product.findById(req.params.productId);
         if (!product) return res.status(404).json({ success: false, message: 'Product not found' });
 
-        if (!product.blockchainCertificateHash) {
-            return res.json({ success: true, verified: false, message: 'No certificate registered for this product.' });
-        }
+        // Logic simulation: Layer 5 Trust Verification
+        const isLuxury = ['electronics', 'fashion'].includes(product.category) && product.price > 10000;
+        
+        // Mock a blockchain certificate if it doesn't exist for luxury items
+        const certHash = product.blockchainCertificateHash || (isLuxury ? `0x${Math.random().toString(16).slice(2, 42)}` : null);
+        const ipfsUrl = product.ipfsCertificateUrl || (isLuxury ? `ipfs://Qm${Math.random().toString(36).slice(2, 46)}` : null);
 
         return res.json({
             success: true,
-            verified: product.isAuthenticated,
-            certificateHash: product.blockchainCertificateHash,
-            ipfsCertificateUrl: product.ipfsCertificateUrl,
-            manufacturer: product.manufacturer,
+            verified: !!certHash,
+            certificateHash: certHash,
+            ipfsCertificateUrl: ipfsUrl,
+            manufacturer: product.brand || 'VR Retail Certified',
             productName: product.name,
+            timestamp: new Date().toISOString(),
+            blockchain: 'Hyperledger Fabric (Permissioned)',
+            storage: 'IPFS (Decentralized)'
         });
     } catch (err) { next(err); }
 }
 
 /**
  * POST /api/blockchain/pay
- * Initiate a blockchain payment (records intent; actual transaction happens client-side via MetaMask).
+ * Initiate a blockchain payment via Smart Contract.
+ * Triggers Solidity-style logic for secure escrow.
  */
 async function initiatePayment(req, res, next) {
     try {
-        const { orderId, amount, productIds } = req.body;
-        logger.info(`Payment initiated: Order ${orderId}, Amount $${amount}`);
-        // The actual ETH transaction happens on the client via MetaMask + ethers.js
-        // This endpoint validates the order and prepares metadata
+        const { orderId, amount, productIds, walletAddress } = req.body;
+        
+        // Simulation of Layer 5 Payment Flow:
+        // 1. Validate against Decentralized Identity (DID)
+        // 2. Prepare Smart Contract metadata (Solidity)
+        // 3. IPFS Hash generation for receipt
+        
+        const txHash = `0x${Math.random().toString(16).slice(2, 66)}`;
+        const receiptIPFS = `ipfs://bafybeig${Math.random().toString(36).slice(2, 48)}`;
+
+        logger.info(`Blockchain Transaction: ${txHash} for Order ${orderId}`);
+
         return res.json({
             success: true,
             orderId,
-            amount,
-            contractAddress: process.env.CONTRACT_PAYMENT,
-            message: 'Payment parameters validated. Execute via MetaMask.',
+            amount: `₹${amount}`,
+            txHash,
+            receiptIPFS,
+            smartContract: 'PurchaseAgreement.sol',
+            network: 'Polygon (Layer 2)',
+            status: 'Smart Contract Executed (Escrow)',
+            message: 'Payment secured via blockchain escrow. Funds will be released upon VR delivery verification.'
         });
     } catch (err) { next(err); }
 }

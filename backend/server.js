@@ -29,6 +29,8 @@ const sessionRoutes = require('./routes/sessionRoutes');
 const emotionRoutes = require('./routes/emotionRoutes');
 const blockchainRoutes = require('./routes/blockchainRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
+const crmRoutes = require('./routes/crmRoutes');
+const displayRoutes = require('./routes/displayRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -71,6 +73,8 @@ app.use('/api/sessions', sessionRoutes);
 app.use('/api/emotion', emotionRoutes);
 app.use('/api/blockchain', blockchainRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/crm', crmRoutes);
+app.use('/api/display', displayRoutes);
 
 // ── Health Check ──────────────────────────────────────────────
 app.get('/api/health', (req, res) => {

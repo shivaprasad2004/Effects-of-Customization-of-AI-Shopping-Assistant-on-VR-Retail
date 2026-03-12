@@ -1,0 +1,84 @@
+{
+  "version": "1.0.0",
+  "store": {
+    "name": "VR Retail Flagship Store",
+    "dimensions": { "width": 100, "depth": 100, "height": 15 },
+    "unit": "meters"
+  },
+  "zones": {
+    "entrance": {
+      "id": "entrance",
+      "label": "Welcome Lobby",
+      "position": { "x": 0, "y": 0, "z": 0 },
+      "dimensions": { "width": 16, "depth": 16 },
+      "color": "#E94560",
+      "description": "Central hub with navigation to all zones",
+      "productSlots": []
+    },
+    "fashion": {
+      "id": "fashion",
+      "label": "Fashion & Apparel",
+      "position": { "x": -15, "y": 0, "z": -15 },
+      "dimensions": { "width": 20, "depth": 20 },
+      "color": "#FF6B85",
+      "description": "Clothing, accessories, and wearables with AR try-on",
+      "productSlots": [
+        { "position": { "x": -5, "y": 1.2, "z": -3 }, "rotation": 0, "size": "large" },
+        { "position": { "x": -3, "y": 1.5, "z": -3 }, "rotation": 30, "size": "medium" },
+        { "position": { "x": -1, "y": 1.3, "z": -3 }, "rotation": -15, "size": "medium" },
+        { "position": { "x": -5, "y": 1.0, "z": -7 }, "rotation": 0, "size": "small" },
+        { "position": { "x": -2, "y": 1.0, "z": -7 }, "rotation": 0, "size": "small" }
+      ]
+    },
+    "electronics": {
+      "id": "electronics",
+      "label": "Electronics & Gadgets",
+      "position": { "x": 15, "y": 0, "z": -15 },
+      "dimensions": { "width": 20, "depth": 20 },
+      "color": "#4FC3F7",
+      "description": "Tech products with 3D configurator and digital display",
+      "productSlots": [
+        { "position": { "x": 5, "y": 1.2, "z": -3 }, "rotation": 0, "size": "large" },
+        { "position": { "x": 7, "y": 1.0, "z": -3 }, "rotation": 20, "size": "large" },
+        { "position": { "x": 9, "y": 1.3, "z": -3 }, "rotation": -10, "size": "medium" },
+        { "position": { "x": 6, "y": 1.0, "z": -7 }, "rotation": 0, "size": "small" },
+        { "position": { "x": 8, "y": 1.0, "z": -7 }, "rotation": 0, "size": "small" }
+      ]
+    },
+    "furniture": {
+      "id": "furniture",
+      "label": "Home & Furniture",
+      "position": { "x": 0, "y": 0, "z": 15 },
+      "dimensions": { "width": 25, "depth": 20 },
+      "color": "#81C784",
+      "description": "Furniture and home decor with AR room placement",
+      "productSlots": [
+        { "position": { "x": 0, "y": 0, "z": 5 }, "rotation": 0, "size": "xlarge" },
+        { "position": { "x": 2, "y": 0, "z": 5 }, "rotation": 0, "size": "large" },
+        { "position": { "x": 4, "y": 1.5, "z": 5 }, "rotation": 45, "size": "medium" },
+        { "position": { "x": -2, "y": 0, "z": 9 }, "rotation": 0, "size": "small" },
+        { "position": { "x": 2, "y": 0, "z": 9 }, "rotation": 0, "size": "small" }
+      ]
+    },
+    "checkout": {
+      "id": "checkout",
+      "label": "Checkout & Payment",
+      "position": { "x": -20, "y": 0, "z": 15 },
+      "dimensions": { "width": 12, "depth": 12 },
+      "color": "#FFB74D",
+      "description": "Blockchain-powered checkout with loyalty rewards",
+      "productSlots": []
+    }
+  },
+  "navigation": {
+    "paths": [
+      { "from": "entrance", "to": "fashion", "type": "direct" },
+      { "from": "entrance", "to": "electronics", "type": "direct" },
+      { "from": "entrance", "to": "furniture", "type": "direct" },
+      { "from": "entrance", "to": "checkout", "type": "direct" },
+      { "from": "fashion", "to": "electronics", "type": "adjacent" },
+      { "from": "furniture", "to": "checkout", "type": "adjacent" }
+    ],
+    "spawnPoint": { "x": 0, "y": 1.6, "z": 0 }
+  }
+}

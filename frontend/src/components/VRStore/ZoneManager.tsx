@@ -21,7 +21,17 @@ export default function ZoneManager({ currentZone }: Props) {
             <ZoneMarker title="Fashion" position={[-20, 0, -20]} color="#E94560" active={currentZone === 'fashion'} />
             <ZoneMarker title="Electronics" position={[20, 0, -20]} color="#0F3460" active={currentZone === 'electronics'} />
             <ZoneMarker title="Furniture" position={[-20, 0, 20]} color="#34D399" active={currentZone === 'furniture'} />
-            <ZoneMarker title="Checkout" position={[20, 0, 20]} color="#FBBF24" active={currentZone === 'checkout'} />
+            <ZoneMarker title="Beauty & Pets" position={[20, 0, 20]} color="#FBBF24" active={currentZone === 'beauty' || currentZone === 'pets'} />
+
+            {/* Layer 1: Virtual Trial Room & Navigation Hub */}
+            <group position={[0, 0, -30]}>
+                <mesh position={[0, 2.5, 0]}>
+                    <boxGeometry args={[10, 5, 0.5]} />
+                    <meshStandardMaterial color="#30CFD0" transparent opacity={0.1} metalness={0.9} roughness={0.1} />
+                </mesh>
+                <Text position={[0, 6, 0]} fontSize={0.4} color="#30CFD0">VIRTUAL TRIAL ROOM</Text>
+                <Text position={[0, 1, 1]} fontSize={0.15} color="white/40">Step inside to see 3D product overlays</Text>
+            </group>
 
             <Suspense fallback={null}>
                 <FashionZone active={currentZone === 'fashion'} />

@@ -96,3 +96,21 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+export const aiApi = axios.create({
+    baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/v1',
+    headers: { 'Content-Type': 'application/json' },
+});
+
+// ── Showcase & Tech Feature APIs ─────────────────────────────
+export const getShowcaseProducts = () => api.get('/products/showcase');
+export const getConfiguratorOptions = (id: string) => api.get(`/products/${id}/configurator`);
+export const getARData = (id: string) => api.get(`/products/${id}/ar-data`);
+export const getKioskData = (id: string) => api.get(`/display/kiosk/${id}`);
+export const getDisplayCatalog = (category: string) => api.get(`/display/catalog/${category}`);
+
+// ── CRM APIs (Dynamics 365 / Salesforce simulation) ──────────
+export const getCRMProfile = (userId: string) => api.get(`/crm/customer-profile/${userId}`);
+export const getCRMInsights = (productId: string) => api.get(`/crm/insights/${productId}`);
+export const trackCRMInteraction = (data: { userId: string; productId: string; interactionType: string; metadata?: any }) =>
+    api.post('/crm/track-interaction', data);
